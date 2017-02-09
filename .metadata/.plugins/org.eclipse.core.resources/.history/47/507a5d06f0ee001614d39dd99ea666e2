@@ -1,0 +1,31 @@
+
+public class Ticket {
+	public int number;
+	public double getprice(){//
+		return ;
+	}
+	public toString() {
+		return ;
+	}
+	
+	
+	
+	public class walkupTicket extends Ticket {
+		//$50
+	}
+
+	public class advancedTicket extends Ticket {
+		//if days >= 10
+			//$30
+		//else 
+			//$40
+	}
+	
+	public class studentAdvancedTicket extends Ticket {
+		//if days >= 10
+			//$15
+		//else
+			//$20
+	}
+	
+}
