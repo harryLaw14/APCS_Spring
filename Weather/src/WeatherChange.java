@@ -3,7 +3,7 @@ import java.util.*;
 
 public class WeatherChange {
 	public static void main (String[] args) throws FileNotFoundException {
-		Scanner s = new Scanner(new File ("./Weather2/weather"));
+		Scanner s = new Scanner(new File ("./Weather/weather"));
 		double[] weather = new double [8];
 		for (int i = 1; i <= weather.length; i++){
 			weather[i] = s.nextDouble();
