@@ -4,7 +4,8 @@ package textExcel;
 
 public class SpreadsheetLocation implements Location{
 	
-	
+	private int rowNum;
+	private int colNum;
     @Override
     public int getRow(){
         // TODO Auto-generated method stub
@@ -23,4 +24,5 @@ public class SpreadsheetLocation implements Location{
         int rowNum = Integer.parseInt(row);
        	int colNum = (int)column - 64;
     }
+
 }

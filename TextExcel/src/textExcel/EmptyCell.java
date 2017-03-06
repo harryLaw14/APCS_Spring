@@ -1,17 +1,14 @@
 package textExcel;
 
-public class EmptyCell implements Cell {
-
-	@Override
-	public String abbreviatedCellText() {
-		// TODO Auto-generated method stub
-		return null;
+public class EmptyCell implements Cell{
+	
+	public String abbreviatedCellText(){
+		String abbreviatedCellText = null;
+		return abbreviatedCellText;
 	}
-
-	@Override
-	public String fullCellText() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public String fullCellText(){
+		String fullCellText = null;
+		return fullCellText;
 	}
-
 }
