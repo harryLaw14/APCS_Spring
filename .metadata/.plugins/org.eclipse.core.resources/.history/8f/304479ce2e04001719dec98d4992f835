@@ -1,5 +1,6 @@
 package textExcel;
 
+
 public class Spreadsheet implements Grid{
 	
 	private Cell[][] spreadsheet = new EmptyCell[12][20];
@@ -51,5 +52,7 @@ public class Spreadsheet implements Grid{
 				spreadsheet[i][j] = new EmptyCell();
 			}
 		}
+		
 	}
-	}
+
+}

@@ -20,4 +20,5 @@ public class SpreadsheetLocation implements Location{
   	int colNum = (int) (coordinates.charAt(0) - 65);
   	return colNum;
   }
+
 }

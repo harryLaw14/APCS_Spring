@@ -1,16 +1,24 @@
 package textExcel;
 
+
 public class Spreadsheet implements Grid{
 	
 	private Cell[][] spreadsheet = new EmptyCell[12][20];
 	
 	@Override
-	public String processCommand(String command){
-		return "";
+	public String processCommand(String command)
+	{
+		if (command.length() <= 3) {
+	    	int rowNum = Integer.parseInt(command.substring(1)) - 1;
+	    	int colNum = (int) (command.charAt(0) - 65);
+	    	return spreadsheet[colNum][rowNum];
+		}
+		return command;
 	}
 	
 	@Override
-	public String getGridText(){
+	public String getGridText()
+	{
 		String gridText = "";
 		System.out.print("  ");
 		for (char c = 'A'; c <= 'L'; c++){
@@ -31,17 +39,20 @@ public class Spreadsheet implements Grid{
 	}
 
 	@Override
-	public int getRows(){
+	public int getRows()
+	{
 		return 20;
 	}
 
 	@Override
-	public int getCols(){
+	public int getCols()
+	{
 		return 12;
 	}
 
 	@Override
-	public Cell getCell(Location loc){
+	public Cell getCell(Location loc)
+	{
 		return null;
 	}
 	
@@ -51,5 +62,7 @@ public class Spreadsheet implements Grid{
 				spreadsheet[i][j] = new EmptyCell();
 			}
 		}
+		
 	}
-	}
+
+}
