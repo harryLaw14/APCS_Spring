@@ -91,12 +91,15 @@ public class Spreadsheet implements Grid{
 	}
 
 	@Override
-	public int getRows(){
+	public int getRows()
+	{
+		// TODO Auto-generated method stub
 		return 20;
 	}
 
 	@Override
 	public int getCols(){
+
 		return 12;
 	}
 
@@ -105,11 +108,13 @@ public class Spreadsheet implements Grid{
 		int a=loc.getRow();
 		int b=loc.getCol();
 		
+		
 		return sheet[a][b];
 	}
 
 	@Override
-	public String getGridText(){
+	public String getGridText()
+	{
 		String griddy="   ";
 		for(char kkk='A'; kkk<='L'; kkk++){
 			griddy+="|"+kkk+"         ";
