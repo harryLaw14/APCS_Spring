@@ -11,8 +11,7 @@ public class Spreadsheet implements Grid{
 			}
 		}
 	}
-   	public String processCommand(String command)
-	{
+   	public String processCommand(String command){
 		if(command.equals("")){
 			return "";
 		}
