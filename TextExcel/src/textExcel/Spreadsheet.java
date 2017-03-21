@@ -1,131 +1,110 @@
 package textExcel;
 
-public class Spreadsheet implements Grid{
-	private Cell[][] sheet;
-	
+public class Spreadsheet implements Grid{	
+	private Cell[][] excel= new Cell[this.getRows()][this.getCols()];
 	public Spreadsheet(){
-		sheet=new Cell [20][12];
-		for(int i=0; i<20; i++){
-			for(int j=0; j<12;j++){
-				sheet[i][j]=new EmptyCell();
+		for (int i=0;i<excel.length;i++){
+			for (int j=0;j<excel[i].length;j++){
+				excel[i][j]=new EmptyCell();
 			}
-		}
 	}
-   	public String processCommand(String command){
-		if(command.equals("")){
-			return "";
-		}
-		
-		String[] spliff=command.split(" ");
-		spliff[0]=spliff[0].toUpperCase();
-		if(command.charAt(command.length()-1)=='%'){
-			spliff[1]=spliff[1].toUpperCase();
-			SpreadsheetLocation low= new SpreadsheetLocation(spliff[0]);
-			sheet[low.getRow()][low.getCol()]=new PercentCell(spliff[2]);
-			return getGridText();
-		}
-		if(spliff.length>1){
-		if(spliff[1].equals("=")){
-			if(spliff[2].substring(0,1).equals("\"")==false){
-				
-				SpreadsheetLocation low= new SpreadsheetLocation(spliff[0]);
-				if (spliff.length==3){
-					sheet[low.getRow()][low.getCol()]=new ValueCell(spliff[2]);
-					
-				}
-				else{
-					String putin="";
-					for(int i=2;i<spliff.length;i++){
-						if(i>=3){
-							putin+=" ";
-						}
-						putin+=spliff[i];
-						
-					}
-					sheet[low.getRow()][low.getCol()]=new FormulaCell(spliff[2]);
-					
-				}
-				return getGridText();
-			}
-		}
-		}
-		
-		if(spliff[0].equals("CLEAR")){
-			if(spliff.length>1){
-				spliff[1]=spliff[1].toUpperCase();
-				SpreadsheetLocation low= new SpreadsheetLocation(spliff[1]);
-				sheet[low.getRow()][low.getCol()]=new EmptyCell();
-			}
-			else{
-				sheet=new Cell [20][12];
-				for(int i=0; i<20; i++){
-					for(int j=0; j<12;j++){
-						sheet[i][j]=new EmptyCell();
-					}
+}
+@Override
+	public String processCommand(String command){	
+		if(command.equals(""))//Clearing
+			return command;
+		if (command.toUpperCase().equals("CLEAR")){//clear a cell
+			for (int i=0;i<excel.length;i++){
+				for (int j=0;j<excel[i].length;j++){
+					excel[i][j]=new EmptyCell();
 				}
 			}
-			return getGridText();
+			return this.getGridText();
 		}
-		else if(spliff.length==1){
-			SpreadsheetLocation low= new SpreadsheetLocation(spliff[0]);
-			Cell aboutToInspect=getCell(low);
-			return aboutToInspect.fullCellText();
-		} else if(spliff[1].equals("=")){
-			SpreadsheetLocation low= new SpreadsheetLocation(spliff[0]);
-			String putin="";
-			for(int i=2;i<spliff.length;i++){
-				if(i>=3){
-					putin+=" ";
-				}
-				putin+=spliff[i];
-				
+		if (command.toUpperCase().startsWith("CLEAR")){
+			excel[Integer.parseInt(command.substring(7))-1][command.toUpperCase().charAt(6)-65] = new EmptyCell();
+			return this.getGridText();
+		}
+		command=command.substring(0,1).toUpperCase()+command.substring(1);
+		if (command.charAt(0)>64&&command.charAt(0)<91){//inspecting
+		if(command.indexOf('=')==-1){//assign textcell
+			String cellValue=excel[Integer.parseInt(command.substring(1))-1][command.charAt(0)-65].fullCellText();
+			return cellValue;
+		}	
+		if (command.indexOf('=')!=-1 && command.indexOf('"')!=-1){
+			if(command.charAt(2)==' '){
+				excel[Integer.parseInt(command.substring(1,2))-1][command.charAt(0)-65]=new TextCell(command.substring(command.indexOf('"')+1,command.lastIndexOf('"')));
+			}else{
+				excel[Integer.parseInt(command.substring(1,3))-1][command.charAt(0)-65]=new TextCell(command.substring(command.indexOf('"')+1,command.lastIndexOf('"')));
+			String newSpreadsheet = this.getGridText();
+			return newSpreadsheet;
 			}
-			
-			sheet[low.getRow()][low.getCol()]=new TextCell(putin);
-			
-			return getGridText();
 		}
-		
-		return "";
-	}
-
-	@Override
-	public int getRows(){
-		return 20;
-	}
-
-	@Override
-	public int getCols(){
-		return 12;
-	}
-
-	@Override
-	public Cell getCell(Location loc){
-		int a=loc.getRow();
-		int b=loc.getCol();
-		
-		return sheet[a][b];
-	}
-
-	@Override
-	public String getGridText(){
-		String griddy="   ";
-		for(char kkk='A'; kkk<='L'; kkk++){
-			griddy+="|"+kkk+"         ";
-		}
-		griddy+="|\n";
-		for(int i=0;i<20;i++){
-			String n=(i+1)+"   ";
-			griddy+=n.substring(0, 3);
-			for(int j=0;j<12;j++){
-				griddy+="|";
-				String s =sheet[i][j].abbreviatedCellText();
-				griddy+=s;
+		else if(command.indexOf('=')!=-1 && command.indexOf("(")!=-1&&command.indexOf(")")!=-1){
+			if(command.charAt(2)==' '){
+				excel[Integer.parseInt(command.substring(1,2))-1][command.charAt(0)-65]=new FormulaCell(command.substring(command.indexOf('(')+1,command.lastIndexOf(')')));
+			}else{
+				excel[Integer.parseInt(command.substring(1,3))-1][command.charAt(0)-65]=new FormulaCell(command.substring(command.indexOf('(')+1,command.lastIndexOf(')')));
+			String newSpreadsheet = this.getGridText();
+			return newSpreadsheet;
 			}
-			griddy+="|\n";	
 		}
-
-		return griddy;
+		//assignment of ValueCell
+		else if(command.indexOf('=')!=-1 && command.indexOf("(")==-1&&command.indexOf(")")==-1&&command.indexOf("%")==-1){
+			if(command.charAt(2)==' ')
+				excel[Integer.parseInt(command.substring(1,2))-1][command.charAt(0)-65]=new ValueCell(command.substring(command.indexOf('=')+2));
+			else
+				excel[Integer.parseInt(command.substring(1,3))-1][command.charAt(0)-65]=new ValueCell(command.substring(command.indexOf('=')+2));
+			String newSpreadsheet = this.getGridText();
+			return newSpreadsheet;}
+		//assignment of PercentCell
+		else if(command.indexOf('=')!=-1 && command.indexOf("(")==-1&&command.indexOf(")")==-1&&command.indexOf("%")!=-1){
+			if(command.charAt(2)==' ')
+				excel[Integer.parseInt(command.substring(1,2))-1][command.charAt(0)-65]=new PercentCell(command.substring(command.indexOf('=')+2));
+			else
+				excel[Integer.parseInt(command.substring(1,3))-1][command.charAt(0)-65]=new PercentCell(command.substring(command.indexOf('=')+2));
+			String newSpreadsheet = this.getGridText();
+			return newSpreadsheet;}
 	}
+
+	return command;
+}
+
+@Override
+public int getRows()
+{
+	return 20;
+}
+
+@Override
+public int getCols()
+{
+	return 12;
+}
+
+@Override
+public Cell getCell(Location loc)
+{
+	return excel[loc.getRow()][loc.getCol()];
+}
+
+@Override
+public String getGridText()
+{
+	String grid="   |A         |B         |C         |D         |E         |F         |G         |H         |I         |J         |K         |L         |"+"\n";
+	for (int i=0;i<this.getRows();i++){
+		if(i<9)
+			grid=grid+(i+1)+"  ";
+		else
+			grid=grid+(i+1)+" ";
+		for (int j=0;j<this.getCols();j++){
+			grid=grid+"|"+ excel[i][j].abbreviatedCellText();
+		}
+		grid=grid+"|\n";
+	}
+
+	return grid;
+}
 
 }
+

@@ -2,21 +2,21 @@ package textExcel;
 
 public class TextCell implements Cell {
 	private String content;
-	public TextCell(String initial){
-		content=initial;
+	public TextCell (String word){
+		content=word;
 	}
 	public String abbreviatedCellText(){
-		String fix="";
-		if(content.length()>1){
-			fix=content.substring(1, content.length()-1);
+		String newContent = content;
+		if (content.length()>10){
+			return content.substring(0,10);
 		}
-		fix+="                    ";
-		return fix.substring(0,10);
+		int spaces=10-content.length();
+		for (int i=0;i<spaces;i++)
+			newContent=newContent+" ";
+		return newContent;
 	}
-
-	@Override
 	public String fullCellText() {
-		return content;
+		return "\""+content+"\"";
 	}
 
 }

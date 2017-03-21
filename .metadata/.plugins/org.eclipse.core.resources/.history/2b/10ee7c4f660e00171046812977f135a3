@@ -7,12 +7,12 @@ public class TextExcel
 
 	public static void main(String[] args)
 	{	
-		System.out.println("Ey!!!");
+		System.out.println("Hey! Welcome to NathanSpreadsheet!");
 		Scanner input= new Scanner(System.in);
-		Spreadsheet wet=new Spreadsheet();
+		Spreadsheet Nathan=new Spreadsheet();
 		String command=input.nextLine();
 		while (!command.equals("quit")){
-			System.out.println(wet.processCommand(command));
+			System.out.println(Nathan.processCommand(command));
 			command=input.nextLine();
 		}
 	}
