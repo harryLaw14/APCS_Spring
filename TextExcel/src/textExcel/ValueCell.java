@@ -5,21 +5,21 @@ public class ValueCell extends RealCell{
 		super(number);
 	}
 	public String abbreviatedCellText() {
-		String newContent = value;
-		if(newContent.indexOf('.')==-1)
-			newContent=newContent+".0";
-		if(newContent.indexOf('.')!=-1)
-		while (newContent.endsWith("00"))
-			newContent=newContent.substring(0,newContent.length()-1);
-		double numbers = Double.parseDouble(value);
-		String newContent= numbers+ "";
-		if (newContent.length()>10){
-			return newContent.substring(0,10);
+		String newStuff = thevalue;
+		if(newStuff.indexOf('.')==-1)
+			newStuff=newStuff+".0";
+		if(newStuff.indexOf('.')!=-1)
+		while (newStuff.endsWith("00"))
+			newStuff=newStuff.substring(0,newStuff.length()-1);
+		double numbers = Double.parseDouble(thevalue);
+		String newotherstuff= numbers+ "";
+		if (newStuff.length()>10){
+			return newStuff.substring(0,10);
 		}
-		int spaces=10-newContent.length();
+		int spaces=10-newStuff.length();
 		for (int i=0;i<spaces;i++)
-			newContent=newContent+" ";
-		return newContent;
+			newStuff=newStuff+" ";
+		return newStuff;
 	}
 
 }

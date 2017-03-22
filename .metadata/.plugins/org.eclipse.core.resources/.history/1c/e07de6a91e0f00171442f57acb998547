@@ -9,10 +9,10 @@ public class TextExcel
 	{	
 		System.out.println("Ey!!!");
 		Scanner input= new Scanner(System.in);
-		Spreadsheet wetlikewater=new Spreadsheet();
+		Spreadsheet wet=new Spreadsheet();
 		String command=input.nextLine();
 		while (!command.equals("quit")){
-			System.out.println(wetlikewater.processCommand(command));
+			System.out.println(wet.processCommand(command));
 			command=input.nextLine();
 		}
 	}

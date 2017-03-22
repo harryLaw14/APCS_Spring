@@ -2,15 +2,9 @@ package textExcel;
 
 public class RealCell implements Cell {
 	String thevalue;
-	
 	public RealCell (String thenumber){
 		thevalue=thenumber;
 	}
-	
-	public double getDoubleValue(){
-		return Double.parseDouble(thevalue);
-	}
-	
 	public String abbreviatedCellText() {
 		String newContent = thevalue;
 		if (thevalue.length()>10){
@@ -21,9 +15,10 @@ public class RealCell implements Cell {
 			newContent=newContent+" ";
 		return newContent;
 	}
-	
 	public String fullCellText() {
 		return thevalue;
 	}
-	
+	public double getDoubleValue(){
+		return Double.parseDouble(thevalue);
+	}
 }

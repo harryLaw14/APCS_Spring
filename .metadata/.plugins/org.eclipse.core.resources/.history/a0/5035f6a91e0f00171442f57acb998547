@@ -5,9 +5,9 @@ public class PercentCell extends RealCell{
 		super(percent);
 	}
 	public String abbreviatedCellText(){
-		String newContent = thevalue.substring(0,thevalue.indexOf('.'));
+		String newContent = value.substring(0,value.indexOf('.'));
 		if (newContent.length()>10){
-			return thevalue.substring(0,9)+"%";
+			return value.substring(0,9)+"%";
 		}
 		newContent=newContent+"%";
 		int spaces=10-newContent.length();
