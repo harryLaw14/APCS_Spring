@@ -32,73 +32,76 @@ public class Spreadsheet implements Grid{
 			String cellValue=excel[Integer.parseInt(command.substring(1))-1][command.charAt(0)-65].fullCellText();
 			return cellValue;
 		}	
-		if (command.indexOf('=')!=-1 && command.indexOf('"')!=-1){
+		if (command.contains("\"")){
 			if(command.charAt(2)==' '){
 				excel[Integer.parseInt(command.substring(1,2))-1][command.charAt(0)-65]=new TextCell(command.substring(command.indexOf('"')+1,command.lastIndexOf('"')));
 			}else{
 				excel[Integer.parseInt(command.substring(1,3))-1][command.charAt(0)-65]=new TextCell(command.substring(command.indexOf('"')+1,command.lastIndexOf('"')));
-			String newSpreadsheet = this.getGridText();
-			return newSpreadsheet;
 			}
+			return getGridText();
+			
 		}else if(command.indexOf('=')!=-1 && command.indexOf("(")!=-1&&command.indexOf(")")!=-1){
-			if(command.charAt(2)==' '){
-				excel[Integer.parseInt(command.substring(1,2))-1][command.charAt(0)-65]=new FormulaCell(command.substring(command.indexOf('(')+1,command.lastIndexOf(')')));
-			}else{
-				excel[Integer.parseInt(command.substring(1,3))-1][command.charAt(0)-65]=new FormulaCell(command.substring(command.indexOf('(')+1,command.lastIndexOf(')')));
+			if(command.charAt(2)==' '){//formulacell
+				excel[Integer.parseInt(command.substring(1,2))-1][command.charAt(0)-65]=new FormulaCell(command.substring(command.indexOf('(')+1));
+			}else{	
+				excel[Integer.parseInt(command.substring(1,3))-1][command.charAt(0)-65]=new FormulaCell(command.substring(command.indexOf('(')+1));
+			}
 			String newSpreadsheet = this.getGridText();
 			return newSpreadsheet;
-			}
 		}else if(command.indexOf('=')!=-1 && command.indexOf("(")==-1&&command.indexOf(")")==-1&&command.indexOf("%")==-1){
-			if(command.charAt(2)==' '){
+			if(command.charAt(2)==' '){//valuecell
 				excel[Integer.parseInt(command.substring(1,2))-1][command.charAt(0)-65]=new ValueCell(command.substring(command.indexOf('=')+2));
 			}else{
 				excel[Integer.parseInt(command.substring(1,3))-1][command.charAt(0)-65]=new ValueCell(command.substring(command.indexOf('=')+2));
-			String newSpreadsheet = this.getGridText();
-			return newSpreadsheet;}
-		}else if(command.indexOf('=')!=-1 && command.indexOf("(")==-1&&command.indexOf(")")==-1&&command.indexOf("%")!=-1){
-			if(command.charAt(2)==' '){
+			}
+			return getGridText();
+			}
+		}else if(command.indexOf("%")!=-1){
+			if(command.charAt(2)==' '){//percentcell
 				excel[Integer.parseInt(command.substring(1,2))-1][command.charAt(0)-65]=new PercentCell(command.substring(command.indexOf('=')+2));
 			}else{
 				excel[Integer.parseInt(command.substring(1,3))-1][command.charAt(0)-65]=new PercentCell(command.substring(command.indexOf('=')+2));
-			String newSpreadsheet = this.getGridText();
-			return newSpreadsheet;}
 			}
+			String newSpreadsheet = this.getGridText();
+			return newSpreadsheet;
 		}
-
-	return command;
-}
-
-@Override
-public int getRows(){
-	return 20;
-}
-
-@Override
-public int getCols(){
-	return 12;
-}
-
-@Override
-public Cell getCell(Location loc){
-	return excel[loc.getRow()][loc.getCol()];
-}
-
-@Override
-public String getGridText(){
-	String grid="   |A         |B         |C         |D         |E         |F         |G         |H         |I         |J         |K         |L         |"+"\n";
-	for (int i=0;i<this.getRows();i++){
-		if(i<9){
-			grid=grid+(i+1)+"  ";
-		}else{
-			grid=grid+(i+1)+" ";
-		}for (int j=0;j<this.getCols();j++){
-			grid=grid+"|"+ excel[i][j].abbreviatedCellText();
-		}
-		grid=grid+"|\n";
+		return command;
 	}
 
-	return grid;
-}
+
+
+	@Override
+	public int getRows(){
+		return 20;
+	}
+
+	@Override
+	public int getCols(){
+		return 12;
+	}
+
+	@Override
+	public Cell getCell(Location loc){
+		return excel[loc.getRow()][loc.getCol()];
+	}
+
+	@Override
+	public String getGridText(){
+		String grid="   |A         |B         |C         |D         |E         |F         |G         |H         |I         |J         |K         |L         |"+"\n";
+		for (int i=0;i<this.getRows();i++){
+			if(i<9){
+				grid=grid+(i+1)+"  ";
+			}else{
+				grid=grid+(i+1)+" ";
+			}
+			for (int j=0;j<this.getCols();j++){
+				grid=grid+"|"+ excel[i][j].abbreviatedCellText();
+			}
+			grid=grid+"|\n";
+		}
+
+		return grid;
+	}
 
 }
 
