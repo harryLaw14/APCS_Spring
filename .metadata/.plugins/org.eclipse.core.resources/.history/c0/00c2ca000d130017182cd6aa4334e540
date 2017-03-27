@@ -9,7 +9,7 @@ public class Spreadsheet implements Grid{
 			}
 	}
 }
-	@Override
+@Override
 	public String processCommand(String command){	
 		if(command.equals("")){//Clearing
 			return command;
