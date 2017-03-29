@@ -1,22 +1,23 @@
 package textExcel;
 
-public class TextCell implements Cell {
+public class TextCell implements Cell{
+
 	private String stuff;
-	public TextCell (String theword){
-		stuff=theword;
+	public TextCell(String init){
+		stuff=init;
 	}
 	public String abbreviatedCellText(){
-		String newStuff = stuff;
-		if (stuff.length()>10){
-			return stuff.substring(0,10);
+		String corr="";
+		if(stuff.length()>1){
+			corr=stuff.substring(1, stuff.length()-1);
 		}
-		int spaces=10-stuff.length();
-		for (int i=0;i<spaces;i++)
-			newStuff=newStuff+" ";
-		return newStuff;
+		corr+="                    ";
+		return corr.substring(0,10);
 	}
-	public String fullCellText() {
-		return "\""+stuff+"\"";
+
+	@Override
+	public String fullCellText(){
+		return stuff;
 	}
 
 }

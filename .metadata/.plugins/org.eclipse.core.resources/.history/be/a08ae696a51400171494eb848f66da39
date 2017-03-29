@@ -10,8 +10,8 @@ public class RealCell implements Cell {
 		stuff=newstuff;
 	}
 	
-	public RealCell(String theinput){
-		stuff=theinput;
+	public RealCell(String value){
+		stuff=value;
 	}
 	public double getDoubleValue(){
 		return 0;

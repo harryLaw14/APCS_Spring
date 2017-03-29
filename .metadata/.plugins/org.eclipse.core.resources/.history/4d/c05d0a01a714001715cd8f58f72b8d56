@@ -181,9 +181,9 @@ public class Spreadsheet implements Grid{
 	}
 
 	@Override
-	public  Cell getCell(Location location){
-		int a=location.getRow();
-		int b=location.getCol();
+	public  Cell getCell(Location loc){
+		int a=loc.getRow();
+		int b=loc.getCol();
 		return sheet[a][b];
 	}
 

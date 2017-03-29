@@ -93,6 +93,7 @@ public class Spreadsheet implements Grid{
 			try {
 				return open(spliff[1]);
 			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -181,9 +182,9 @@ public class Spreadsheet implements Grid{
 	}
 
 	@Override
-	public  Cell getCell(Location location){
-		int a=location.getRow();
-		int b=location.getCol();
+	public  Cell getCell(Location loc){
+		int a=loc.getRow();
+		int b=loc.getCol();
 		return sheet[a][b];
 	}
 
@@ -205,6 +206,9 @@ public class Spreadsheet implements Grid{
 			}
 			grid+="|\n";	
 		}
+		// TODO Auto-generated method stub
 		return grid;
 	}
+	
+
 }

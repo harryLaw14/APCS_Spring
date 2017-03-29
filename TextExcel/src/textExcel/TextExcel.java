@@ -1,19 +1,19 @@
 package textExcel;
-import java.util.*;
+
 import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.*;
 
-public class TextExcel
-{
-
-	public static void main(String[] args)
-	{	
-		System.out.println("Ey!!!");
-		Scanner input= new Scanner(System.in);
-		Spreadsheet wetlikewater=new Spreadsheet();
-		String command=input.nextLine();
-		while (!command.equals("quit")){
-			System.out.println(wetlikewater.processCommand(command));
-			command=input.nextLine();
+public class TextExcel{
+	
+	public static void main(String[] args){
+		Spreadsheet push=new Spreadsheet();
+		Scanner userInput=new Scanner(System.in);
+		String input=userInput.nextLine();
+		while(input.equals("quit")==false){
+			String troll=push.processCommand(input);
+			System.out.println(troll);
+			input=userInput.nextLine();
 		}
 	}
 }
