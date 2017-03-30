@@ -10,13 +10,13 @@ public class ValueCell extends RealCell {
 	public double getDoubleValue(){
 		String roller=getStuff();
 		
-		double banger=Double.parseDouble(roller);
-		return banger;
+		double kkkkkk=Double.parseDouble(roller);
+		return kkkkkk;
 	}
 	public String abbreviatedCellText(){
 		String roller=getStuff();		
-		double banger=Double.parseDouble(roller);
-		roller=banger+"";
+		double kkkkkk=Double.parseDouble(roller);
+		roller=kkkkkk+"";
 		if(roller.indexOf(".")==-1){
 			roller+=(".0");
 		}

@@ -16,46 +16,46 @@ public class Spreadsheet implements Grid{
 	public String open(String filename) throws FileNotFoundException{
 		Scanner input = new Scanner(new File(filename));
 		while(input.hasNext()==true){
-			String yell = input.nextLine();
-			String[] splitter=yell.split(",");
+			String call = input.nextLine();
+			String[] splitto=call.split(",");
 			
-			splitter[0]=splitter[0].toUpperCase();
-			SpreadsheetLocation low=new SpreadsheetLocation(splitter[0]);
-			if(splitter[1].equals("TextCell")){
-				sheet[low.getRow()][low.getCol()]=new TextCell(splitter[2]);
+			splitto[0]=splitto[0].toUpperCase();
+			SpreadsheetLocation low=new SpreadsheetLocation(splitto[0]);
+			if(splitto[1].equals("TextCell")){
+				sheet[low.getRow()][low.getCol()]=new TextCell(splitto[2]);
 			}
-			if(splitter[1].equals("PercentCell")){
-				double omg=Double.parseDouble(splitter[2]);
-				omg*=100;
-				String yeet=omg+"%";
-				sheet[low.getRow()][low.getCol()]=new PercentCell(yeet);
+			if(splitto[1].equals("PercentCell")){
+				double wtf=Double.parseDouble(splitto[2]);
+				wtf*=100;
+				String ehhh=wtf+"%";
+				sheet[low.getRow()][low.getCol()]=new PercentCell(ehhh);
 			}
-			if(splitter[1].equals("ValueCell")){
-				sheet[low.getRow()][low.getCol()]=new ValueCell(splitter[2]);
+			if(splitto[1].equals("ValueCell")){
+				sheet[low.getRow()][low.getCol()]=new ValueCell(splitto[2]);
 			}
-			if(splitter[1].equals("FormulaCell")){
-				sheet[low.getRow()][low.getCol()]=new FormulaCell(splitter[2]);
+			if(splitto[1].equals("FormulaCell")){
+				sheet[low.getRow()][low.getCol()]=new FormulaCell(splitto[2]);
 			}
 			
 		}
 		return getGridText();
 	}
-	public String saver(String filename){
-		String submit="";
+	public String save(String filename){
+		String enter="";
 		for(int i=0;i<20;i++){
 			for(char j='A';j<'M';j++){
 				Cell testcase=sheet[i][j-'A'];
 				if(sheet[i][j-'A'] instanceof FormulaCell){
-					submit+=j+""+(i+1)+",FormulaCell,"+testcase.fullCellText()+"\n";
+					enter+=j+""+(i+1)+",FormulaCell,"+testcase.fullCellText()+"\n";
 				}
 				if(sheet[i][j-'A'] instanceof TextCell){
-					submit+=j+""+(i+1)+",TextCell,"+testcase.fullCellText()+"\n";
+					enter+=j+""+(i+1)+",TextCell,"+testcase.fullCellText()+"\n";
 				}
 				if(sheet[i][j-'A'] instanceof ValueCell){
-					submit+=j+""+(i+1)+",ValueCell,"+testcase.fullCellText()+"\n";
+					enter+=j+""+(i+1)+",ValueCell,"+testcase.fullCellText()+"\n";
 				}
 				if(sheet[i][j-'A'] instanceof PercentCell){
-					submit+=j+""+(i+1)+",PercentCell,"+testcase.fullCellText()+"\n";
+					enter+=j+""+(i+1)+",PercentCell,"+testcase.fullCellText()+"\n";
 				}
 				
 				
@@ -182,26 +182,29 @@ public class Spreadsheet implements Grid{
 
 	@Override
 	public  Cell getCell(Location location){
-		int alpha=location.getRow();
-		int beta=location.getCol();
-		return sheet[alpha][beta];
+		int a=location.getRow();
+		int b=location.getCol();
+		return sheet[a][b];
 	}
 
 	@Override
-	public String getGridText()
-	{
-		String grid="   |A         |B         |C         |D         |E         |F         |G         |H         |I         |J         |K         |L         |"+"\n";
-		for (int i=0;i<this.getRows();i++){
-			if(i<9)
-				grid=grid+(i+1)+"  ";
-			else
-				grid=grid+(i+1)+" ";
-			for (int j=0;j<this.getCols();j++){
-				grid=grid+"|"+ sheet[i][j].abbreviatedCellText();
-			}
-			grid=grid+"|\n";
+	public String getGridText(){
+		String grid="   ";
+		for(char kkk='A'; kkk<='L'; kkk++){
+			grid+="|"+kkk+"         ";
 		}
-
+		grid+="|\n";
+		for(int i=0;i<20;i++){
+			String n=(i+1)+"   ";
+			grid+=n.substring(0, 3);
+			for(int j=0;j<12;j++){
+				grid+="|";
+				
+				String s =sheet[i][j].abbreviatedCellText();
+				grid+=s;
+			}
+			grid+="|\n";	
+		}
 		return grid;
 	}
 }

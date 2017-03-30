@@ -3,10 +3,10 @@ package textExcel;
 public class RealCell implements Cell {
 
 	private String stuff;
-	public String getStuff(){
+	public String getstuff(){
 		return stuff;
 	}
-	public void setStuff(String newstuff){
+	public void setstuff(String newstuff){
 		stuff=newstuff;
 	}
 	

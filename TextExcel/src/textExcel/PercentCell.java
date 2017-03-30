@@ -6,18 +6,18 @@ public class PercentCell extends RealCell {
 	}
 	public double getDoubleValue(){
 
-		String ball=getContent();
-		ball=ball.substring(0,ball.length()-1);
-		double kkkkkk=Double.parseDouble(ball);
-		return kkkkkk/100;
+		String roller=getStuff();
+		roller=roller.substring(0,roller.length()-1);
+		double banger=Double.parseDouble(roller);
+		return banger/100;
 	}
 	public String abbreviatedCellText(){
-		String ball=getContent();
-		if(ball.indexOf(".")!=-1){
-			ball=ball.substring(0,ball.indexOf("."))+"%";
+		String roller=getStuff();
+		if(roller.indexOf(".")!=-1){
+			roller=roller.substring(0,roller.indexOf("."))+"%";
 		}
-		ball+="                    ";
-		return ball.substring(0,10);
+		roller+="                    ";
+		return roller.substring(0,10);
 	}
 	public String fullCellText(){
 		return ""+getDoubleValue();
