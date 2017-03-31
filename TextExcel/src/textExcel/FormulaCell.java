@@ -1,130 +1,126 @@
 package textExcel;
 
-public class FormulaCell extends RealCell{
-	private Spreadsheet mySpreadsheet;
-	public FormulaCell(String formula){
-		super(formula);
-	}
-	public FormulaCell(String formula, Spreadsheet excel){
-		this(formula);
-		mySpreadsheet=excel;
-	}
-	public double getDoubleValue (){
-		String [] splitted = stuff.split(" ");
-		double answer = 0;
-		if (splitted[1].toUpperCase().equals("SUM")){
-			answer = answer + this.getSumValue(splitted, 1);
-		}
-		else if (splitted[1].toUpperCase().equals("AVG")){
-			answer = answer + this.getAvgValue(splitted, 1);
-		}		
-		else if (splitted[1].toUpperCase().charAt(0)<77&&splitted[1].toUpperCase().charAt(0)>64){
-			SpreadsheetLocation cellLoc= new SpreadsheetLocation (splitted[1].toUpperCase());
-			answer = answer + ((RealCell)(mySpreadsheet.getCell(cellLoc))).getDoubleValue();
-		}
-		else
-			answer = (Double.parseDouble(splitted[1]));
-		for (int i=2; i<splitted.length;i=i+2){
-			if(splitted[i].equals("+"))
-				if (splitted[i+1].toUpperCase().equals("SUM")){
-					answer = answer + this.getSumValue(splitted, i+1);
-					i++;
-				}
-				else if (splitted[i+1].toUpperCase().equals("AVG")){
-					answer = answer + this.getAvgValue(splitted, i+1);
-					i++;
-				}
-				else if(splitted[i+1].toUpperCase().charAt(0)<77&&splitted[i+1].toUpperCase().charAt(0)>64){
-					SpreadsheetLocation cellLoc= new SpreadsheetLocation (splitted[i+1].toUpperCase());
-					answer = answer + ((RealCell)(mySpreadsheet.getCell(cellLoc))).getDoubleValue();
-				}
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
-				else
-					answer = answer + Double.parseDouble(splitted[i+1]);
-			if(splitted[i].equals("-"))
-				if (splitted[i+1].toUpperCase().equals("SUM")){
-					answer = answer - this.getSumValue(splitted, i+1);
-					i++;
-				}
-				else if (splitted[i+1].toUpperCase().equals("AVG")){
-					answer = answer - this.getAvgValue(splitted, i+1);
-					i++;
-				}
-				else if(splitted[i+1].toUpperCase().charAt(0)<77&&splitted[i+1].toUpperCase().charAt(0)>64){
-					SpreadsheetLocation cellLoc= new SpreadsheetLocation (splitted[i+1].toUpperCase());
-					answer = answer - ((RealCell)(mySpreadsheet.getCell(cellLoc))).getDoubleValue();
-				}
-				else
-					answer = answer - Double.parseDouble(splitted[i+1]);
-			if(splitted[i].equals("*"))
-				if (splitted[i+1].toUpperCase().equals("SUM")){
-					answer = answer * this.getSumValue(splitted, i+1);
-					i++;
-				}
-				else if (splitted[i+1].toUpperCase().equals("AVG")){
-					answer = answer * this.getAvgValue(splitted, i+1);
-					i++;
-				}
-				else if(splitted[i+1].toUpperCase().charAt(0)<77&&splitted[i+1].toUpperCase().charAt(0)>64){
-					SpreadsheetLocation cellLoc= new SpreadsheetLocation (splitted[i+1].toUpperCase());
-					answer = answer * ((RealCell)(mySpreadsheet.getCell(cellLoc))).getDoubleValue();
-				}
-				else
-					answer = answer * Double.parseDouble(splitted[i+1]);
-			if(splitted[i].equals("/"))
-				if (splitted[i+1].toUpperCase().equals("SUM")){
-					answer = answer / this.getSumValue(splitted, i+1);
-					i++;
-				}
-				else if (splitted[i+1].toUpperCase().equals("AVG")){
-					answer = answer / this.getAvgValue(splitted, i+1);
-					i++;
-				}
-				else if(splitted[i+1].toUpperCase().charAt(0)<77&&splitted[i+1].toUpperCase().charAt(0)>64){
-					SpreadsheetLocation cellLoc= new SpreadsheetLocation (splitted[i+1].toUpperCase());
-					answer = answer / ((RealCell)(mySpreadsheet.getCell(cellLoc))).getDoubleValue();
-				}
-				else
-					answer = answer / Double.parseDouble(splitted[i+1]);
-		}
-		return answer;
+public class FormulaCell extends RealCell {
 
+	public FormulaCell(String submit){
+		super(submit);
 	}
-	public double getSumValue(String [] splitted, int start){
-		double answer=0;
-		SpreadsheetLocation cellLocStart= new SpreadsheetLocation (splitted[start+1].substring(0,splitted[start+1].indexOf('-')).toUpperCase());
-		SpreadsheetLocation cellLocEnd= new SpreadsheetLocation (splitted[start+1].substring(splitted[start+1].indexOf('-')+1).toUpperCase());
-		for(int j=cellLocStart.getRow()+1;j<=cellLocEnd.getRow()+1;j++){
-			for (int k=cellLocStart.getCol();k<=cellLocEnd.getCol();k++){
-				SpreadsheetLocation cellLoc= new SpreadsheetLocation((char)(k+65)+""+j);
-				if((mySpreadsheet.getCell(cellLoc)) instanceof RealCell){
-					answer=answer + ((RealCell)(mySpreadsheet.getCell(cellLoc))).getDoubleValue();
+	public double getCellFile(String location) throws FileNotFoundException{
+		Scanner input = new Scanner(new File("water"));//directing where to find file
+		double answer;
+		while(input.hasNext()==true){
+			String call = input.nextLine();
+			String[] splitter=call.split(",");
+			splitter[0]=splitter[0].toUpperCase();
+			if(splitter[0].equals(location)){
+				if(splitter[1].equals("ValueCell")||splitter[1].equals("PercentCell")){
+				answer=Double.parseDouble(splitter[2]);
+				return answer;
+				}
+				else{
+					FormulaCell wadup=new FormulaCell(splitter[2]);
+					return wadup.getDoubleValue();
 				}
 			}
 		}
-		return answer;
+		return 0;
 	}
-	public double getAvgValue(String [] splitted, int start){
+	public double getDoubleValue(){
+		String[] game=fullCellText().split(" ");
 		double answer=0;
-		int counter=0;
-		SpreadsheetLocation cellLocStart= new SpreadsheetLocation (splitted[start+1].substring(0,splitted[start+1].indexOf('-')).toUpperCase());
-		SpreadsheetLocation cellLocEnd= new SpreadsheetLocation (splitted[start+1].substring(splitted[start+1].indexOf('-')+1).toUpperCase());
-		for(int j=cellLocStart.getRow()+1;j<=cellLocEnd.getRow()+1;j++){
-			for (int k=cellLocStart.getCol();k<=cellLocEnd.getCol();k++){
-				SpreadsheetLocation cellLoc= new SpreadsheetLocation((char)(k+65)+""+j);
-				if((mySpreadsheet.getCell(cellLoc)) instanceof RealCell){
-					answer=answer + ((RealCell)(mySpreadsheet.getCell(cellLoc))).getDoubleValue();
-					counter++;
+		game[1]=game[1].toUpperCase();
+		if(game[1].equals("AVG")||game[1].equals("SUM")){
+			game[2]=game[2].toUpperCase();
+			String[] clamp =game[2].split("-");
+			int count=0;
+			double total =0;
+			int one=Integer.parseInt(clamp[0].substring(1));
+			int two=Integer.parseInt(clamp[1].substring(1));
+			
+			char question=clamp[1].charAt(0);
+			for(char give=clamp[0].charAt(0); give<=question; give++){
+				for(int j=one;j<=two;j++){
+					
+					String cellClamp=Character.toString(give)+j;
+							
+					try {
+						if(cellThere(cellClamp)){
+							total+=getCellFile(cellClamp);
+							count++;
+							
+							
+						}
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					}
 				}
 			}
+			if(game[1].equals("SUM")){
+				return total;
+			} else{
+			return total/count;
+			}
+		} 
+		if(Character.isLetter(game[1].charAt(0))){
+			try {
+				answer=getCellFile(game[1]);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		} else{
+			answer =Double.parseDouble(game[1]);
+		
 		}
-		return answer/counter;
+		
+		for(int i=3; i<game.length; i+=2){
+			double additional=0;
+			if(Character.isLetter(game[i].charAt(0))){
+				try {
+					additional=getCellFile(game[i].toUpperCase());
+				} catch (FileNotFoundException y){
+					y.printStackTrace();
+				}
+			}else{
+				additional=Double.parseDouble(game[i]);
+			}
+				if(game[i-1].equals("+")){
+					answer+=additional;
+				}
+				if(game[i-1].equals("-")){
+					answer-=additional;
+				}
+				if(game[i-1].equals("*")){
+					answer*=additional;
+				}
+				if(game[i-1].equals("/")){
+					answer/=additional;
+				}
+			}
+		
+		return answer;
 	}
 	public String abbreviatedCellText(){
-		String formula=this.getDoubleValue()+"          ";
-		return formula.substring(0,10);
+		String answer=getDoubleValue()+"                   ";
+		return answer.substring(0, 10);
 	}
-	public String fullCellText(){
-		return value;
+	public boolean cellThere(String location) throws FileNotFoundException{
+		Scanner input = new Scanner(new File("banana"));//directing where to find file
+		while(input.hasNext()==true){
+			String ask = input.nextLine();
+			String[] splitter=ask.split(",");
+			splitter[0]=splitter[0].toUpperCase();
+			if(splitter[0].equals(location)){
+				
+				return true;
+				}
+		}
+		return false;
+			
+			
+		
 	}
 }

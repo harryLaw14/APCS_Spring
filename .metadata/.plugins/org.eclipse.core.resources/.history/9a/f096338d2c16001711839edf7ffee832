@@ -67,7 +67,7 @@ public class Spreadsheet implements Grid{
 		try {
 		    writer = new BufferedWriter(new OutputStreamWriter(
 		          new FileOutputStream(filename), "utf-8"));
-		    writer.write(submit);
+		    writer.write(enter);
 		} catch (IOException ex) {
 		  // report
 		} finally {
@@ -84,57 +84,57 @@ public class Spreadsheet implements Grid{
 			return "";
 		}
 		
-		String[] slick=command.split(" ");
-		slick[0]=slick[0].toUpperCase();
-		if(slick[0].equals("SAVE")){
-			return (slick[1]);
+		String[] spliff=command.split(" ");
+		spliff[0]=spliff[0].toUpperCase();
+		if(spliff[0].equals("SAVE")){
+			return save(spliff[1]);
 		}
-		if(slick[0].equals("OPEN")){
+		if(spliff[0].equals("OPEN")){
 			try {
-				return open(slick[1]);
+				return open(spliff[1]);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
 		}
 		if(command.charAt(command.length()-1)=='%'){
-			slick[1]=slick[1].toUpperCase();
-			SpreadsheetLocation low= new SpreadsheetLocation(slick[0]);
-			sheet[low.getRow()][low.getCol()]=new PercentCell(slick[2]);
-			saver("water");
+			spliff[1]=spliff[1].toUpperCase();
+			SpreadsheetLocation low= new SpreadsheetLocation(spliff[0]);
+			sheet[low.getRow()][low.getCol()]=new PercentCell(spliff[2]);
+			save("banana");
 			return getGridText();
 		}
-		if(slick.length>1){
-		if(slick[1].equals("=")){
-			if(slick[2].substring(0,1).equals("\"")==false){
+		if(spliff.length>1){
+		if(spliff[1].equals("=")){
+			if(spliff[2].substring(0,1).equals("\"")==false){
 				
-				SpreadsheetLocation lowlife= new SpreadsheetLocation(slick[0]);
-				if (slick.length==3){
-					sheet[lowlife.getRow()][lowlife.getCol()]=new ValueCell(slick[2]);
+				SpreadsheetLocation low= new SpreadsheetLocation(spliff[0]);
+				if (spliff.length==3){
+					sheet[low.getRow()][low.getCol()]=new ValueCell(spliff[2]);
 					
 				}
 				else{
-					String foodie="";
-					for(int i=2;i<slick.length;i++){
+					String putin="";
+					for(int i=2;i<spliff.length;i++){
 						if(i>=3){
-							foodie+=" ";
+							putin+=" ";
 						}
-						foodie+=slick[i];
+						putin+=spliff[i];
 						
 					}
-					sheet[lowlife.getRow()][lowlife.getCol()]=new FormulaCell(foodie);
+					sheet[low.getRow()][low.getCol()]=new FormulaCell(putin);
 					
 				}
-				saver("water");
+				save("banana");
 				return getGridText();
 			}
 		}
 		}
 		
-		if(slick[0].equals("CLEAR")){
-			if(slick.length>1){
-				slick[1]=slick[1].toUpperCase();
-				SpreadsheetLocation lowlife= new SpreadsheetLocation(slick[1]);
-				sheet[lowlife.getRow()][lowlife.getCol()]=new EmptyCell();
+		if(spliff[0].equals("CLEAR")){
+			if(spliff.length>1){
+				spliff[1]=spliff[1].toUpperCase();
+				SpreadsheetLocation low= new SpreadsheetLocation(spliff[1]);
+				sheet[low.getRow()][low.getCol()]=new EmptyCell();
 			}
 			else{
 				sheet=new Cell [20][12];
@@ -144,26 +144,26 @@ public class Spreadsheet implements Grid{
 					}
 				}
 			}
-			saver("water");
+			save("banana");
 			return getGridText();
 		}
-		else if(slick.length==1){
-			SpreadsheetLocation lowlife= new SpreadsheetLocation(slick[0]);
-			Cell aboutToInspect=getCell(lowlife);
+		else if(spliff.length==1){
+			SpreadsheetLocation low= new SpreadsheetLocation(spliff[0]);
+			Cell aboutToInspect=getCell(low);
 			return aboutToInspect.fullCellText();
-		} else if(slick[1].equals("=")){
-			SpreadsheetLocation lowlife= new SpreadsheetLocation(slick[0]);
-			String foodie="";
-			for(int i=2;i<slick.length;i++){
+		} else if(spliff[1].equals("=")){
+			SpreadsheetLocation low= new SpreadsheetLocation(spliff[0]);
+			String putin="";
+			for(int i=2;i<spliff.length;i++){
 				if(i>=3){
-					foodie+=" ";
+					putin+=" ";
 				}
-				foodie+=slick[i];
+				putin+=spliff[i];
 				
 			}
 			
-			sheet[lowlife.getRow()][lowlife.getCol()]=new TextCell(foodie);
-			saver("water");
+			sheet[low.getRow()][low.getCol()]=new TextCell(putin);
+			save("banana");
 			return getGridText();
 		}
 		
