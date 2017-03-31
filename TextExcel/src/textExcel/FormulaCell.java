@@ -13,8 +13,8 @@ public class FormulaCell extends RealCell {
 		Scanner input = new Scanner(new File("water"));//directing where to find file
 		double answer;
 		while(input.hasNext()==true){
-			String call = input.nextLine();
-			String[] splitter=call.split(",");
+			String ask = input.nextLine();
+			String[] splitter=ask.split(",");
 			splitter[0]=splitter[0].toUpperCase();
 			if(splitter[0].equals(location)){
 				if(splitter[1].equals("ValueCell")||splitter[1].equals("PercentCell")){
@@ -108,7 +108,7 @@ public class FormulaCell extends RealCell {
 		return answer.substring(0, 10);
 	}
 	public boolean cellThere(String location) throws FileNotFoundException{
-		Scanner input = new Scanner(new File("banana"));//directing where to find file
+		Scanner input = new Scanner(new File("water"));//directing where to find file
 		while(input.hasNext()==true){
 			String ask = input.nextLine();
 			String[] splitter=ask.split(",");

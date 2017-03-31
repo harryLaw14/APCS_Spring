@@ -6,6 +6,10 @@ public class TextCell implements Cell{
 	public TextCell(String init){
 		stuff=init;
 	}
+
+	public String fullCellText(){
+		return stuff;
+	}
 	public String abbreviatedCellText(){
 		String corr="";
 		if(stuff.length()>1){
@@ -14,11 +18,5 @@ public class TextCell implements Cell{
 		corr+="                    ";
 		return corr.substring(0,10);
 	}
-
-	@Override
-	public String fullCellText(){
-		return stuff;
-	}
-
 }
 

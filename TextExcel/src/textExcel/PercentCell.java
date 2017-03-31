@@ -11,6 +11,10 @@ public class PercentCell extends RealCell {
 		double banger=Double.parseDouble(roller);
 		return banger/100;
 	}
+	public String fullCellText(){
+		return ""+getDoubleValue();
+		
+	}
 	public String abbreviatedCellText(){
 		String roller=getStuff();
 		if(roller.indexOf(".")!=-1){
@@ -18,9 +22,5 @@ public class PercentCell extends RealCell {
 		}
 		roller+="                    ";
 		return roller.substring(0,10);
-	}
-	public String fullCellText(){
-		return ""+getDoubleValue();
-		
 	}
 }
