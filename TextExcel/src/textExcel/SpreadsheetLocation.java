@@ -1,7 +1,9 @@
 package textExcel;
 
-public class SpreadsheetLocation implements Location{	private int row;
+public class SpreadsheetLocation implements Location{	
+	private int row;
 	private int col;
+	
     @Override
     public int getRow(){
         return row;

@@ -27,7 +27,7 @@ public class Spreadsheet implements Grid{
 		}
 		if(slick[0].equals("OPEN")){
 			try {
-				return open(slick[1]);
+				return opener(slick[1]);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -103,7 +103,7 @@ public class Spreadsheet implements Grid{
 		return "";
 	}
 
-	public String open(String filename) throws FileNotFoundException{
+	public String opener(String filename) throws FileNotFoundException{
 		Scanner input = new Scanner(new File(filename));
 		while(input.hasNext()==true){
 			String yell = input.nextLine();
@@ -170,14 +170,14 @@ public class Spreadsheet implements Grid{
 	}
 	
 	@Override
-	public String getGridText()
-	{
+	public String getGridText(){
 		String grid="   |A         |B         |C         |D         |E         |F         |G         |H         |I         |J         |K         |L         |"+"\n";
 		for (int i=0;i<this.getRows();i++){
-			if(i<9)
+			if(i<9){
 				grid=grid+(i+1)+"  ";
-			else
+			}else{
 				grid=grid+(i+1)+" ";
+			}
 			for (int j=0;j<this.getCols();j++){
 				grid=grid+"|"+ spreadsheet[i][j].abbreviatedCellText();
 			}
