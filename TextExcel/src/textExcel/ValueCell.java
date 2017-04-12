@@ -27,4 +27,8 @@ public class ValueCell extends RealCell {
 		roller+="               ";
 		return roller.substring(0,10);
 	}
+
+	
+	
+
 }

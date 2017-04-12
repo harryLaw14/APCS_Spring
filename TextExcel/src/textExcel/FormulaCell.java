@@ -10,7 +10,7 @@ public class FormulaCell extends RealCell {
 		super(submit);
 	}
 	public double getCellFile(String location) throws FileNotFoundException{
-		Scanner input = new Scanner(new File("water"));
+		Scanner input = new Scanner(new File("water"));//directing where to find file
 		double answer;
 		while(input.hasNext()==true){
 			String ask = input.nextLine();
@@ -108,7 +108,7 @@ public class FormulaCell extends RealCell {
 		return answer.substring(0, 10);
 	}
 	public boolean cellThere(String location) throws FileNotFoundException{
-		Scanner input = new Scanner(new File("water"));
+		Scanner input = new Scanner(new File("water"));//directing where to find file
 		while(input.hasNext()==true){
 			String ask = input.nextLine();
 			String[] splitter=ask.split(",");
