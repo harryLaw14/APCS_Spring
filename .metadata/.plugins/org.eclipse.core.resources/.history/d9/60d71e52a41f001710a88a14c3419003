@@ -103,8 +103,8 @@ public class Spreadsheet implements Grid{
 		return "";
 	}
 
-	private String opener(String files) throws FileNotFoundException{
-		Scanner input = new Scanner(new File(files));
+	private String opener(String filename) throws FileNotFoundException{
+		Scanner input = new Scanner(new File(filename));
 		while(input.hasNext()==true){
 			String yell = input.nextLine();
 			String[] divide=yell.split(",");
@@ -130,7 +130,7 @@ public class Spreadsheet implements Grid{
 		return getGridText();
 	}
 	
-	private String saver(String files){
+	private String saver(String filename){
 		String submit="";
 		for(int i=0;i<20;i++){
 			for(char j='A';j<'M';j++){
@@ -155,7 +155,7 @@ public class Spreadsheet implements Grid{
 		Writer type = null;
 		try {
 		    type = new BufferedWriter(new OutputStreamWriter(
-		          new FileOutputStream(files), "lol-8"));
+		          new FileOutputStream(filename), "lol-8"));
 		    type.write(submit);
 		} catch (IOException ex) {
 		  // report

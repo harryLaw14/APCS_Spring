@@ -7,6 +7,8 @@
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="get"/>
+			<item value="getValue"/>
 			<item value="            String output = grid.processCommand(input);"/>
 		</list>
 		<list key="replacehistory">
