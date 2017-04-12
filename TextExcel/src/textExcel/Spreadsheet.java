@@ -107,23 +107,23 @@ public class Spreadsheet implements Grid{
 		Scanner input = new Scanner(new File(filename));
 		while(input.hasNext()==true){
 			String yell = input.nextLine();
-			String[] splitter=yell.split(",");
-			splitter[0]=splitter[0].toUpperCase();
-			SpreadsheetLocation lowlife=new SpreadsheetLocation(splitter[0]);
-			if(splitter[1].equals("TextCell")){
-				spreadsheet[lowlife.getRow()][lowlife.getCol()]=new TextCell(splitter[2]);
+			String[] divide=yell.split(",");
+			divide[0]=divide[0].toUpperCase();
+			SpreadsheetLocation lowlife=new SpreadsheetLocation(divide[0]);
+			if(divide[1].equals("TextCell")){
+				spreadsheet[lowlife.getRow()][lowlife.getCol()]=new TextCell(divide[2]);
 			}
-			if(splitter[1].equals("PercentCell")){
-				double omg=Double.parseDouble(splitter[2]);
+			if(divide[1].equals("PercentCell")){
+				double omg=Double.parseDouble(divide[2]);
 				omg*=100;
 				String yeet=omg+"%";
 				spreadsheet[lowlife.getRow()][lowlife.getCol()]=new PercentCell(yeet);
 			}
-			if(splitter[1].equals("ValueCell")){
-				spreadsheet[lowlife.getRow()][lowlife.getCol()]=new ValueCell(splitter[2]);
+			if(divide[1].equals("ValueCell")){
+				spreadsheet[lowlife.getRow()][lowlife.getCol()]=new ValueCell(divide[2]);
 			}
-			if(splitter[1].equals("FormulaCell")){
-				spreadsheet[lowlife.getRow()][lowlife.getCol()]=new FormulaCell(splitter[2]);
+			if(divide[1].equals("FormulaCell")){
+				spreadsheet[lowlife.getRow()][lowlife.getCol()]=new FormulaCell(divide[2]);
 			}
 			
 		}
@@ -160,7 +160,7 @@ public class Spreadsheet implements Grid{
 		} catch (IOException ex) {
 		  // report
 		} finally {
-		   try {type.close();} catch (Exception ex) {/*ignore*/}
+		   try {type.close();} catch (Exception ex) {}
 		}
 
 			
@@ -186,6 +186,13 @@ public class Spreadsheet implements Grid{
 	}
 
 	@Override
+	public  Cell getCell(Location location){
+		int alpha=location.getRow();
+		int beta=location.getCol();
+		return spreadsheet[alpha][beta];
+	}
+	
+	@Override
 	public int getRows(){
 		return 20;
 	}
@@ -195,11 +202,5 @@ public class Spreadsheet implements Grid{
 		return 12;
 	}
 
-	@Override
-	public  Cell getCell(Location location){
-		int alpha=location.getRow();
-		int beta=location.getCol();
-		return spreadsheet[alpha][beta];
-	}
 }
 

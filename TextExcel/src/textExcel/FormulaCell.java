@@ -9,28 +9,28 @@ public class FormulaCell extends RealCell {
 	public FormulaCell(String submit){
 		super(submit);
 	}
-	public double getCellFile(String location) throws FileNotFoundException{
+	public double getCell(String location) throws FileNotFoundException{
 		Scanner input = new Scanner(new File("water"));
 		double answer;
 		while(input.hasNext()==true){
 			String ask = input.nextLine();
-			String[] splitter=ask.split(",");
-			splitter[0]=splitter[0].toUpperCase();
-			if(splitter[0].equals(location)){
-				if(splitter[1].equals("ValueCell")||splitter[1].equals("PercentCell")){
-				answer=Double.parseDouble(splitter[2]);
+			String[] divide=ask.split(",");
+			divide[0]=divide[0].toUpperCase();
+			if(divide[0].equals(location)){
+				if(divide[1].equals("ValueCell")||divide[1].equals("PercentCell")){
+				answer=Double.parseDouble(divide[2]);
 				return answer;
 				}
 				else{
-					FormulaCell wadup=new FormulaCell(splitter[2]);
-					return wadup.getDoubleValue();
+					FormulaCell wadup=new FormulaCell(divide[2]);
+					return wadup.getValue();
 				}
 			}
 		}
 		return 0;
 	}
 	
-	public double getDoubleValue(){
+	public double getValue(){
 		String[] game=fullCellText().split(" ");
 		double answer=0;
 		game[1]=game[1].toUpperCase();
@@ -50,7 +50,7 @@ public class FormulaCell extends RealCell {
 							
 					try {
 						if(cellShow(cellClamp)){
-							total+=getCellFile(cellClamp);
+							total+=getCell(cellClamp);
 							count++;
 							
 							
@@ -68,7 +68,7 @@ public class FormulaCell extends RealCell {
 		} 
 		if(Character.isLetter(game[1].charAt(0))){
 			try {
-				answer=getCellFile(game[1]);
+				answer=getCell(game[1]);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -81,7 +81,7 @@ public class FormulaCell extends RealCell {
 			double additional=0;
 			if(Character.isLetter(game[i].charAt(0))){
 				try {
-					additional=getCellFile(game[i].toUpperCase());
+					additional=getCell(game[i].toUpperCase());
 				} catch (FileNotFoundException y){
 					y.printStackTrace();
 				}

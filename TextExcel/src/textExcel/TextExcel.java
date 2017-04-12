@@ -9,11 +9,11 @@ public class TextExcel{
 	public static void main(String[] args){
 		Spreadsheet push=new Spreadsheet();
 		Scanner userInput=new Scanner(System.in);
-		String input=userInput.nextLine();
-		while(input.equals("quit")==false){
-			String troll=push.processCommand(input);
+		String answer=userInput.nextLine();
+		while(answer.equals("quit")==false){
+			String troll=push.processCommand(answer);
 			System.out.println(troll);
-			input=userInput.nextLine();
+			answer=userInput.nextLine();
 		}
 	}
 }
