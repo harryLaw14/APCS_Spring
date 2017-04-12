@@ -4,16 +4,15 @@ public class ValueCell extends RealCell {
 	public ValueCell(String enter){
 		super(enter);
 	}
+	
 	public double getDoubleValue(){
 		String roller=getStuff();
-		
 		double banger=Double.parseDouble(roller);
 		return banger;
 	}
 	
 	public String fullTextCell(){
 		String roller=getStuff();
-		
 		return  getDoubleValue()+"";
 	}
 	
@@ -27,8 +26,4 @@ public class ValueCell extends RealCell {
 		roller+="               ";
 		return roller.substring(0,10);
 	}
-
-	
-	
-
 }

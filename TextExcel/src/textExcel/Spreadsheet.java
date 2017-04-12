@@ -3,7 +3,7 @@ import java.io.*;
 import java.util.Scanner;
 
 public class Spreadsheet implements Grid{
-	private  Cell[][] spreadsheet;
+	private Cell[][] spreadsheet;
 	
 	public Spreadsheet(){
 		spreadsheet=new Cell [20][12];
@@ -27,7 +27,7 @@ public class Spreadsheet implements Grid{
 		}
 		if(slick[0].equals("OPEN")){
 			try {
-				return open(slick[1]);
+				return opener(slick[1]);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -103,12 +103,11 @@ public class Spreadsheet implements Grid{
 		return "";
 	}
 
-	public String open(String filename) throws FileNotFoundException{
+	private String opener(String filename) throws FileNotFoundException{
 		Scanner input = new Scanner(new File(filename));
 		while(input.hasNext()==true){
 			String yell = input.nextLine();
 			String[] splitter=yell.split(",");
-			
 			splitter[0]=splitter[0].toUpperCase();
 			SpreadsheetLocation lowlife=new SpreadsheetLocation(splitter[0]);
 			if(splitter[1].equals("TextCell")){
@@ -131,7 +130,7 @@ public class Spreadsheet implements Grid{
 		return getGridText();
 	}
 	
-	public String saver(String filename){
+	private String saver(String filename){
 		String submit="";
 		for(int i=0;i<20;i++){
 			for(char j='A';j<'M';j++){
@@ -154,7 +153,6 @@ public class Spreadsheet implements Grid{
 			
 		}
 		Writer type = null;
-		
 		try {
 		    type = new BufferedWriter(new OutputStreamWriter(
 		          new FileOutputStream(filename), "lol-8"));
@@ -204,3 +202,4 @@ public class Spreadsheet implements Grid{
 		return spreadsheet[alpha][beta];
 	}
 }
+

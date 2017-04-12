@@ -1,0 +1,139 @@
+package textExcel;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.Arrays;
+
+public class FormulaCell extends RealCell {
+
+	public FormulaCell(String submit){
+		super(submit);
+	}
+	public double getCellFile(String location) throws FileNotFoundException{
+		Scanner input = new Scanner(new File("water"));
+		double answer;
+		while(input.hasNext()==true){
+			String ask = input.nextLine();
+			String[] splitter=ask.split(",");
+			splitter[0]=splitter[0].toUpperCase();
+			if(splitter[0].equals(location)){
+				if(splitter[1].equals("ValueCell")||splitter[1].equals("PercentCell")){
+				answer=Double.parseDouble(splitter[2]);
+				return answer;
+				}
+				else{
+					FormulaCell wadup=new FormulaCell(splitter[2]);
+					return wadup.getDoubleValue();
+				}
+			}
+		}
+		return 0;
+	}
+	public double getDoubleValue(){
+		String[] game=fullCellText().split(" ");
+		double answer=0;
+		game[1]=game[1].toUpperCase();
+		if(game[1].equals("AVG")||game[1].equals("SUM")){
+			game[2]=game[2].toUpperCase();
+			String[] clamp =game[2].split("-");
+			int count=0;
+			double total =0;
+			int one=Integer.parseInt(clamp[0].substring(1));
+			int two=Integer.parseInt(clamp[1].substring(1));
+			
+			char question=clamp[1].charAt(0);
+			for(char give=clamp[0].charAt(0); give<=question; give++){
+				for(int j=one;j<=two;j++){
+					
+					String cellClamp=Character.toString(give)+j;
+							
+					try {
+						if(cellThere(cellClamp)){
+							total+=getCellFile(cellClamp);
+							count++;
+							
+							
+						}
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			if(game[1].equals("SUM")){
+				return total;
+			} else{
+			return total/count;
+			}
+		} 
+		if(Character.isLetter(game[1].charAt(0))){
+			try {
+				answer=getCellFile(game[1]);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		} else{
+			answer =Double.parseDouble(game[1]);
+		
+		}
+		
+		for(int i=3; i<game.length; i+=2){
+			double additional=0;
+			if(Character.isLetter(game[i].charAt(0))){
+				try {
+					additional=getCellFile(game[i].toUpperCase());
+				} catch (FileNotFoundException y){
+					y.printStackTrace();
+				}
+			}else{
+				additional=Double.parseDouble(game[i]);
+			}
+				if(game[i-1].equals("+")){
+					answer+=additional;
+				}
+				if(game[i-1].equals("-")){
+					answer-=additional;
+				}
+				if(game[i-1].equals("*")){
+					answer*=additional;
+				}
+				if(game[i-1].equals("/")){
+					answer/=additional;
+				}
+			}
+		
+		return answer;
+	}
+	public String abbreviatedCellText() {
+		String cellStuff = "" + this.getDoubleValue();
+		String returnStuff = cellStuff;
+		if(cellStuff.length() > 10) {
+			return(cellStuff.substring(0, 10));
+		}else {
+			for(int i = 0; i < 10 - cellStuff.length(); i++) {
+				returnStuff += " ";
+			}
+			return returnStuff;
+		}
+	}
+	
+	public boolean isNumeric(String input) {
+		String testString;
+		boolean returnValue = true;
+		if(input.charAt(0) == '-') {			
+			testString = input.substring(1);			
+		}
+		else {
+			testString = input;	
+		}
+	
+		for(int i = 0; i < testString.length(); i ++) {
+			if(testString.charAt(i) != '.') {
+				if(!Character.isDigit(testString.charAt(i))) {
+					return !returnValue;
+				}
+			}
+		}
+			return returnValue;
+	}
+}

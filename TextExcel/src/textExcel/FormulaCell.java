@@ -10,7 +10,7 @@ public class FormulaCell extends RealCell {
 		super(submit);
 	}
 	public double getCellFile(String location) throws FileNotFoundException{
-		Scanner input = new Scanner(new File("water"));//directing where to find file
+		Scanner input = new Scanner(new File("water"));
 		double answer;
 		while(input.hasNext()==true){
 			String ask = input.nextLine();
@@ -29,6 +29,7 @@ public class FormulaCell extends RealCell {
 		}
 		return 0;
 	}
+	
 	public double getDoubleValue(){
 		String[] game=fullCellText().split(" ");
 		double answer=0;
@@ -48,7 +49,7 @@ public class FormulaCell extends RealCell {
 					String cellClamp=Character.toString(give)+j;
 							
 					try {
-						if(cellThere(cellClamp)){
+						if(cellShow(cellClamp)){
 							total+=getCellFile(cellClamp);
 							count++;
 							
@@ -103,24 +104,37 @@ public class FormulaCell extends RealCell {
 		
 		return answer;
 	}
-	public String abbreviatedCellText(){
-		String answer=getDoubleValue()+"                   ";
-		return answer.substring(0, 10);
-	}
-	public boolean cellThere(String location) throws FileNotFoundException{
-		Scanner input = new Scanner(new File("water"));//directing where to find file
-		while(input.hasNext()==true){
-			String ask = input.nextLine();
-			String[] splitter=ask.split(",");
-			splitter[0]=splitter[0].toUpperCase();
-			if(splitter[0].equals(location)){
-				
-				return true;
-				}
+	
+	public boolean cellShow(String input) {
+		String testStuff;
+		boolean returnValue = true;
+		if(input.charAt(0) == '-') {			
+			testStuff = input.substring(1);			
 		}
-		return false;
-			
-			
-		
+		else {
+			testStuff = input;	
+		}
+	
+		for(int i = 0; i < testStuff.length(); i ++) {
+			if(testStuff.charAt(i) != '.') {
+				if(!Character.isDigit(testStuff.charAt(i))) {
+					return !returnValue;
+				}
+			}
+		}
+			return returnValue;
+	}
+	
+	public String abbreviatedCellText() {
+		String cellStuff = "" + this.getDoubleValue();
+		String returnStuff = cellStuff;
+		if(cellStuff.length() > 10) {
+			return(cellStuff.substring(0, 10));
+		}else {
+			for(int i = 0; i < 10 - cellStuff.length(); i++) {
+				returnStuff += " ";
+			}
+			return returnStuff;
+		}
 	}
 }
