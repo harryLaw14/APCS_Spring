@@ -127,14 +127,15 @@ public class FormulaCell extends RealCell {
 	
 	public String abbreviatedCellText() {
 		String cellStuff = "" + this.getDoubleValue();
-		String returnStuff = cellStuff;
+		String feedback = cellStuff;
 		if(cellStuff.length() > 10) {
 			return(cellStuff.substring(0, 10));
-		}else {
+		}
+		else {
 			for(int i = 0; i < 10 - cellStuff.length(); i++) {
-				returnStuff += " ";
+				feedback += " ";
 			}
-			return returnStuff;
+			return feedback;
 		}
 	}
 }

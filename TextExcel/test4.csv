@@ -1,0 +1,3 @@
+A1,ValueCell,2
+A2,ValueCell,4
+A3,FormulaCell,( a1 + a2 )
