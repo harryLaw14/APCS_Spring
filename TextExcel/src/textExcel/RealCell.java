@@ -4,28 +4,37 @@ public class RealCell implements Cell {
 
 	private String stuff;
 	
-	public void setStuff(String newstuff){
-		stuff=newstuff;
+	//Constructs a new real cell
+	public RealCell (String content) {
+		stuff = content;
 	}
 	
-	public String getStuff(){
+	public String fullCellText() {
+		String newStuff = stuff;
+		return newStuff;
+	}
+	
+
+	public double getDoubleValue() {
+		return Double.parseDouble(stuff);
+	}
+	
+	//Returns the line of user input that was used to make the cell
+	public String getUserInput() {
 		return stuff;
 	}
 
-	public double getDoubleValue(){
-		return 0;
-	}
+	public String abbreviatedCellText() {
+		String newStuff = stuff;
+		if(stuff.length() > 10) {
+			return(stuff.substring(0, 10));
+		}
+		else {
+			for(int i = 0; i < 10 - stuff.length(); i++) {
+				newStuff += " ";
+			}
+			return newStuff;
+		}
 	
-	public RealCell(String theinput){
-		stuff=theinput;
-	}
-	
-	public String fullCellText(){
-		return stuff;
-	}
-	
-	public String abbreviatedCellText(){
-		String corr=stuff+"                    ";
-		return corr.substring(0,10);
 	}
 }

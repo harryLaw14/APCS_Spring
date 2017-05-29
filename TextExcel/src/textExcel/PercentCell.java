@@ -1,28 +1,32 @@
 package textExcel;
 
 public class PercentCell extends RealCell {
-	public PercentCell(String enter){
-		super(enter);
+	
+	
+	//Constructs a new percent cell
+	public PercentCell(String stuff) {
+		super(stuff);
 	}
 	
-	public double getDoubleValue(){
-		String roller=getStuff();
-		roller=roller.substring(0,roller.length()-1);
-		double banger=Double.parseDouble(roller);
-		return banger/100;
-	}
-	
-	public String fullCellText(){
-		return ""+getDoubleValue();
-		
-	}
-	
-	public String abbreviatedCellText(){
-		String roller=getStuff();
-		if(roller.indexOf(".")!=-1){
-			roller=roller.substring(0,roller.indexOf("."))+"%";
+
+	public String abbreviatedCellText() {
+		String percentage = getUserInput().substring(0, getUserInput().indexOf("."));
+		percentage += "%";
+		String bounce = percentage;
+		for(int i = 0; i < 10 - percentage.length(); i++) {
+			bounce += " ";
 		}
-		roller+="                    ";
-		return roller.substring(0,10);
+		return bounce;
+	}
+	
+
+	public String fullCellText() {
+		String bounce = "" + this.getDoubleValue();
+		return bounce;
+	}
+	
+
+	public double getDoubleValue() {
+		return (Double.parseDouble(getUserInput().substring(0, getUserInput().indexOf("%")))/100);
 	}
 }

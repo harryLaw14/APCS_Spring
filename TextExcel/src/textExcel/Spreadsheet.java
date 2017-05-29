@@ -14,6 +14,8 @@ public class Spreadsheet implements Grid{
 		}
 	}
 	
+	
+	
 	public String processCommand(String command){
 		
 		if(command.equals("")){
@@ -104,9 +106,9 @@ public class Spreadsheet implements Grid{
 	}
 
 	private String opener(String files) throws FileNotFoundException{
-		Scanner input = new Scanner(new File(files));
-		while(input.hasNext()==true){
-			String yell = input.nextLine();
+		Scanner response = new Scanner(new File(files));
+		while(response.hasNext()==true){
+			String yell = response.nextLine();
 			String[] divide=yell.split(",");
 			divide[0]=divide[0].toUpperCase();
 			SpreadsheetLocation lowlife=new SpreadsheetLocation(divide[0]);

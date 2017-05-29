@@ -1,0 +1,22 @@
+package textExcel;
+
+public class TextCell implements Cell{
+
+	private String stuff;
+	public TextCell(String start){
+		stuff=start;
+	}
+
+	public String fullCellText(){
+		return stuff;
+	}
+	public String abbreviatedCellText(){
+		String corr="";
+		if(stuff.length()>1){
+			corr=stuff.substring(1, stuff.length()-1);
+		}
+		corr+="                    ";
+		return corr.substring(0,10);
+	}
+}
+

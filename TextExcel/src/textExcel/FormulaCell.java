@@ -6,14 +6,14 @@ import java.util.Scanner;
 
 public class FormulaCell extends RealCell {
 
-	public FormulaCell(String submit){
-		super(submit);
+	public FormulaCell(String stuff){
+		super(stuff);
 	}
 	public double getCellFile(String location) throws FileNotFoundException{
-		Scanner input = new Scanner(new File("water"));
+		Scanner response = new Scanner(new File("water"));
 		double answer;
-		while(input.hasNext()==true){
-			String ask = input.nextLine();
+		while(response.hasNext()==true){
+			String ask = response.nextLine();
 			String[] divide=ask.split(",");
 			divide[0]=divide[0].toUpperCase();
 			if(divide[0].equals(location)){

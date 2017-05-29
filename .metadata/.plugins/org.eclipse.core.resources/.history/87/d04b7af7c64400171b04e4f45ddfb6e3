@@ -1,0 +1,34 @@
+package textExcel;
+
+public class TextCell implements Cell {
+
+	private String stuff;
+	
+	public TextCell(String contents) {
+		stuff = contents;
+	}
+	public String abbreviatedCellText() {
+		String newCellContents = stuff;
+		if(stuff.length() > 10) {
+			return(stuff.substring(0, 10));
+		}
+		else {
+			for(int i = 0; i < 10 - stuff.length(); i++) {
+				newCellContents += " ";
+			}
+			return newCellContents;
+		}
+	
+	}
+
+	
+	public String fullCellText() {
+		String newCellContents = "\"" + stuff + "\"";
+		return newCellContents;
+	}
+	
+	public void setContents(String newContents){
+		stuff = newContents;
+	}
+
+}

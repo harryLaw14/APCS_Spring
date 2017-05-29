@@ -1,16 +1,13 @@
 package textExcel;
 
-public class TextCell implements Cell{
+public class TextCell implements Cell {
 
 	private String stuff;
-	public TextCell(String init){
-		stuff=init;
+	public TextCell(String start){
+		stuff=start;
 	}
+	public String abbreviatedCellText() {
 
-	public String fullCellText(){
-		return stuff;
-	}
-	public String abbreviatedCellText(){
 		String corr="";
 		if(stuff.length()>1){
 			corr=stuff.substring(1, stuff.length()-1);
@@ -18,5 +15,9 @@ public class TextCell implements Cell{
 		corr+="                    ";
 		return corr.substring(0,10);
 	}
-}
 
+	public String fullCellText() {
+		return stuff;
+	}
+
+}
