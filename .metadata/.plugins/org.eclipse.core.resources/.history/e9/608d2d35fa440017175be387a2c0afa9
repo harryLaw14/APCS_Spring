@@ -1,4 +1,3 @@
-//Harry Law 2nd period
 package textExcel;
 
 public class SpreadsheetLocation implements Location {
