@@ -2,39 +2,39 @@ package textExcel;
 
 public class RealCell implements Cell {
 
-	private String stuff;
+	private String ques;
 	
-	//Constructs a new real cell
-	public RealCell (String content) {
-		stuff = content;
-	}
-	
-	public String fullCellText() {
-		String newStuff = stuff;
-		return newStuff;
+
+	public RealCell (String stuff) { //makes real cell
+		ques = stuff;
 	}
 	
 
-	public double getDoubleValue() {
-		return Double.parseDouble(stuff);
-	}
-	
-	//Returns the line of user input that was used to make the cell
-	public String getUserInput() {
-		return stuff;
-	}
-
-	public String abbreviatedCellText() {
-		String newStuff = stuff;
-		if(stuff.length() > 10) {
-			return(stuff.substring(0, 10));
+	public String abbreviatedCellText() { //10 spaces
+		String newstuff = ques;
+		if(ques.length() > 10) {
+			return(ques.substring(0, 10));
 		}
 		else {
-			for(int i = 0; i < 10 - stuff.length(); i++) {
-				newStuff += " ";
+			for(int i = 0; i < 10 - ques.length(); i++) {
+				newstuff += " ";
 			}
-			return newStuff;
+			return newstuff;
 		}
 	
 	}
+
+	public String fullCellText() {
+		String newstuff = ques;
+		return newstuff;
+	}
+	
+	public double getDoubleValue() {
+		return Double.parseDouble(ques);
+	}
+	
+	public String getUserInput() {
+		return ques;
+	}
+	
 }

@@ -1,0 +1,43 @@
+package textExcel;
+
+public class RealCell implements Cell {
+
+	private String ques;
+	
+	//Constructs a new real cell
+	public RealCell (String stuff) {
+		ques = stuff;
+	}
+	
+	//Returns the contents of the cell truncated to ten spaces
+	public String abbreviatedCellText() {
+		String newCellContents = ques;
+		if(ques.length() > 10) {
+			return(ques.substring(0, 10));
+		}
+		else {
+			for(int i = 0; i < 10 - ques.length(); i++) {
+				newCellContents += " ";
+			}
+			return newCellContents;
+		}
+	
+	}
+
+	//Returns the non-truncated contents of the cell
+	public String fullCellText() {
+		String newCellContents = ques;
+		return newCellContents;
+	}
+	
+	//Returns the double value of a real cell
+	public double getDoubleValue() {
+		return Double.parseDouble(ques);
+	}
+	
+	//Returns the line of user input that was used to make the cell
+	public String getUserInput() {
+		return ques;
+	}
+	
+}

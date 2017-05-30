@@ -1,141 +1,113 @@
 package textExcel;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.util.Arrays;
 
 public class FormulaCell extends RealCell {
-
-	public FormulaCell(String stuff){
-		super(stuff);
+	Cell [][] newSpreadsheet = Spreadsheet.sheet;
+	public FormulaCell(String ques) {//makes formulacell
+		super(ques);
 	}
-	public double getCellFile(String location) throws FileNotFoundException{
-		Scanner response = new Scanner(new File("water"));
-		double answer;
-		while(response.hasNext()==true){
-			String ask = response.nextLine();
-			String[] divide=ask.split(",");
-			divide[0]=divide[0].toUpperCase();
-			if(divide[0].equals(location)){
-				if(divide[1].equals("ValueCell")||divide[1].equals("PercentCell")){
-				answer=Double.parseDouble(divide[2]);
-				return answer;
-				}
-				else{
-					FormulaCell wadup=new FormulaCell(divide[2]);
-					return wadup.getDoubleValue();
+	
+	public String abbreviatedCellText() { //10 spaces
+		String stuff = "" + this.getDoubleValue();
+		String lineup = stuff;
+		if(stuff.length() > 10) {
+			return(stuff.substring(0, 10));
+		}
+		else {
+			for(int i = 0; i < 10 - stuff.length(); i++) {
+				lineup += " ";
+			}
+			return lineup;
+		}
+	}
+	
+	public boolean number(String ques) {
+		String tester;
+		boolean returner = true;
+		if(ques.charAt(0) == '-') {			
+			tester = ques.substring(1);			
+		}else {
+			tester = ques;	
+		}
+		for(int i = 0; i < tester.length(); i ++) {
+			if(tester.charAt(i) != '.') {
+				if(!Character.isDigit(tester.charAt(i))) {
+					return !returner;
 				}
 			}
 		}
-		return 0;
+			return returner;
 	}
 	
-	public double getDoubleValue(){
-		String[] game=fullCellText().split(" ");
-		double answer=0;
-		game[1]=game[1].toUpperCase();
-		if(game[1].equals("AVG")||game[1].equals("SUM")){
-			game[2]=game[2].toUpperCase();
-			String[] clamp =game[2].split("-");
-			int count=0;
-			double total =0;
-			int one=Integer.parseInt(clamp[0].substring(1));
-			int two=Integer.parseInt(clamp[1].substring(1));
-			
-			char question=clamp[1].charAt(0);
-			for(char give=clamp[0].charAt(0); give<=question; give++){
-				for(int j=one;j<=two;j++){
-					
-					String cellClamp=Character.toString(give)+j;
-							
-					try {
-						if(cellShow(cellClamp)){
-							total+=getCellFile(cellClamp);
-							count++;
-							
-							
-						}
-					} catch (FileNotFoundException e) {
-						e.printStackTrace();
+	public double getDoubleValue() {
+		String [] confirm = getUserInput().substring(2, getUserInput().length()-2).split(" ");
+		double amount = 0.0;	
+		double amount2 = 0.0;
+		if(confirm[0].toLowerCase().equals("sum") || confirm[0].toLowerCase().equals("avg")) {
+			int counter = 0;
+			double avg = 0.0;
+			String [] confirm2 = confirm[1].split("-");
+			SpreadsheetLocation start = new SpreadsheetLocation(confirm2[0]);
+			SpreadsheetLocation finish = new SpreadsheetLocation(confirm2[1]);
+			int beginRow = start.getRow() + 1;
+			int beginCol = start.getCol() + 1;
+			for(int row = beginRow; row <= finish.getRow() + 1; row++) {
+				for(int col = beginCol; col <= finish.getCol() + 1; col++) {
+					if(newSpreadsheet[row][col] instanceof FormulaCell) {
+						amount += ((RealCell) newSpreadsheet[row][col]).getDoubleValue();
+					}else {
+						amount += Double.valueOf(newSpreadsheet[row][col].fullCellText());
+					}
+					counter ++;
+				}
+			}
+			avg = amount/counter;
+			if(confirm[0].toLowerCase().equals("avg") && counter > 1) {
+				amount = avg;
+			}
+		}else {
+			if(number(confirm[0].substring(0, 1))) {
+				amount = Double.valueOf(confirm[0]);
+			}else {
+				SpreadsheetLocation loc = new SpreadsheetLocation(confirm[0]);
+				if(newSpreadsheet[loc.getRow() + 1][loc.getCol() + 1] instanceof FormulaCell) {
+					amount = ((RealCell) newSpreadsheet[loc.getRow() + 1][loc.getCol() + 1]).getDoubleValue();
+				}else {
+					amount = Double.valueOf(newSpreadsheet[loc.getRow() + 1][loc.getCol() + 1].fullCellText());
+				}
+			}
+			for(int i = 0; i < confirm.length - 1; i += 2) {
+				if(number(confirm[i+2].substring(0, 1))) {
+					amount2 = Double.valueOf(confirm[i+2]);
+				}else {
+					SpreadsheetLocation loc = new SpreadsheetLocation(confirm[i+2]);
+					if(newSpreadsheet[loc.getRow() + 1][loc.getCol() + 1] instanceof FormulaCell) {
+						amount2 = ((RealCell) newSpreadsheet[loc.getRow() + 1][loc.getCol() + 1]).getDoubleValue();
+					}else {
+						amount2 = Double.valueOf(newSpreadsheet[loc.getRow() + 1][loc.getCol() + 1].fullCellText());
 					}
 				}
-			}
-			if(game[1].equals("SUM")){
-				return total;
-			} else{
-			return total/count;
-			}
-		} 
-		if(Character.isLetter(game[1].charAt(0))){
-			try {
-				answer=getCellFile(game[1]);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-		} else{
-			answer =Double.parseDouble(game[1]);
-		
-		}
-		
-		for(int i=3; i<game.length; i+=2){
-			double additional=0;
-			if(Character.isLetter(game[i].charAt(0))){
-				try {
-					additional=getCellFile(game[i].toUpperCase());
-				} catch (FileNotFoundException y){
-					y.printStackTrace();
-				}
-			}else{
-				additional=Double.parseDouble(game[i]);
-			}
-				if(game[i-1].equals("+")){
-					answer+=additional;
-				}
-				if(game[i-1].equals("-")){
-					answer-=additional;
-				}
-				if(game[i-1].equals("*")){
-					answer*=additional;
-				}
-				if(game[i-1].equals("/")){
-					answer/=additional;
-				}
-			}
-		
-		return answer;
-	}
-	
-	public boolean cellShow(String input) {
-		String testStuff;
-		boolean returnValue = true;
-		if(input.charAt(0) == '-') {			
-			testStuff = input.substring(1);			
-		}
-		else {
-			testStuff = input;	
-		}
-	
-		for(int i = 0; i < testStuff.length(); i ++) {
-			if(testStuff.charAt(i) != '.') {
-				if(!Character.isDigit(testStuff.charAt(i))) {
-					return !returnValue;
-				}
+					if(confirm[i+1].equals("+")) {
+						amount += amount2;
+					}
+					else {
+						if(confirm[i+1].equals("-")) {
+							amount -= amount2;
+						}
+						else {
+							if(confirm[i+1].equals("*")) {
+								amount *= amount2;
+							}
+							else {
+								if(confirm[i+1].equals("/")) {
+									amount /= amount2;
+								}
+							}
+						}	
+					}
 			}
 		}
-			return returnValue;
-	}
-	
-	public String abbreviatedCellText() {
-		String cellStuff = "" + this.getDoubleValue();
-		String feedback = cellStuff;
-		if(cellStuff.length() > 10) {
-			return(cellStuff.substring(0, 10));
-		}
-		else {
-			for(int i = 0; i < 10 - cellStuff.length(); i++) {
-				feedback += " ";
-			}
-			return feedback;
-		}
+		return amount;
 	}
 }
